@@ -3,45 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.hudzah.theplantfactory.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.hudzah.theplantfactory.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/homeFragment"
         android:name="com.hudzah.theplantfactory.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_newOrderFragment"
-            app:destination="@id/newOrderFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_ordersFragment"
-            app:destination="@id/ordersFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/newOrderFragment"
         android:name="com.hudzah.theplantfactory.NewOrderFragment"
         android:label="fragment_new_order"
         tools:layout="@layout/fragment_new_order" />
     <fragment
-        android:id="@+id/ordersFragment"
+        android:id="@+id/ordersListFragment"
         android:name="com.hudzah.theplantfactory.OrdersFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
