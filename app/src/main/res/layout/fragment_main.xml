@@ -7,5 +7,80 @@
     tools:context=".MainFragment">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/header"
+            android:textSize="28sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/colorPrimaryLightDark"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here's what's happening"
+            android:textSize="18sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your 5 Latest Orders"
+            android:textSize="18sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="sans-serif-medium"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerView"
+            android:orientation="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <Button
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="View All Orders"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="right"
+            android:textAllCaps="false"
+            android:background="@drawable/roundedbutton"
+            android:backgroundTint="@color/colorPrimaryLightDark"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
+            android:id="@+id/viewOrdersButton"
+            />
+
+
+
+    </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_exit_to_app_black_24dp"
+        android:id="@+id/fabLeave"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom|right" />
 
 </FrameLayout>

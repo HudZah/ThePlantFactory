@@ -5,6 +5,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,10 +21,12 @@ public class MainActivity extends AppCompatActivity {
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
 
-        NavController navController = Navigation.findNavController(this,R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this,R.id.fragment);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+
 
     }
 }
