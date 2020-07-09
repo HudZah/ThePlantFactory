@@ -12,31 +12,57 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/header"
-            android:textSize="28sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"
-            android:textColor="@color/colorPrimaryLightDark"
-            android:fontFamily="sans-serif-medium"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Here's what's happening"
-            android:textSize="18sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginBottom="30dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:fontFamily="sans-serif-medium"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/header"
+                    android:textSize="28sp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:textColor="@color/colorPrimaryLightDark"
+                    android:fontFamily="sans-serif-medium"/>
+
+                <TextView
+                    android:layout_below="@+id/header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Here's what's happening"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="25dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="sans-serif-medium"/>
+
+            </RelativeLayout>
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_exit_to_app_black_24dp"
+                android:id="@+id/fabLeave"
+                android:layout_marginTop="12.5dp"
+                android:layout_marginLeft="17dp"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your 5 Latest Orders"
+            android:layout_marginTop="30dp"
             android:textSize="18sp"
             android:layout_marginLeft="25dp"
             android:layout_marginBottom="20dp"
@@ -57,7 +83,8 @@
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:text="View All Orders"
-            android:layout_marginTop="25dp"
+            android:foreground="@drawable/ripple_rounded"
+            android:layout_marginTop="35dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="right"
             android:textAllCaps="false"
@@ -74,13 +101,6 @@
     </LinearLayout>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_exit_to_app_black_24dp"
-        android:id="@+id/fabLeave"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="bottom|right" />
+
 
 </FrameLayout>

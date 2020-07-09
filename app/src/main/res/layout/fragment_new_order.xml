@@ -3,12 +3,337 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NewOrderFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create A New Order"
+                android:textSize="28sp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/colorPrimaryLightDark"
+                android:fontFamily="sans-serif-medium"/>
+
+            <TextView
+                android:layout_below="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Invoice ID: "
+                android:textSize="18sp"
+                android:id="@+id/header"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="sans-serif-medium"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Details"
+                        android:layout_marginTop="30dp"
+                        android:textSize="21sp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-medium"/>
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/customerTextView"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/roundedbutton"
+                        android:hint="Customer"
+                        android:paddingLeft="20dp"
+                        android:completionThreshold="1"
+                        android:completionHint="Select A Customer"
+                        android:layout_marginBottom="15dp"
+                        android:singleLine="true"/>
+
+                    <LinearLayout
+                        android:layout_marginLeft="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/bulkButton"
+                            android:layout_marginRight="-1dp"
+                            android:width="100dp"
+                            android:layout_width="wrap_content"
+                            android:text="Bulk"
+                            android:textAllCaps="false"
+                            android:foreground="@drawable/fg_rounded_button_left"
+                            android:background="@drawable/half_rounded_button_left"
+                            android:layout_height="wrap_content"/>
+
+                        <Button
+                            android:id="@+id/retailButton"
+                            android:width="100dp"
+                            android:foreground="@drawable/fg_rounded_button_right"
+                            android:background="@drawable/half_rounded_button_right"
+                            android:layout_width="wrap_content"
+                            android:textAllCaps="false"
+                            android:text="Retail"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Products"
+                        android:layout_marginTop="30dp"
+                        android:textSize="21sp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-medium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/productEditText"
+                            android:layout_marginRight="40dp"
+                            android:layout_marginLeft="25dp"
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/half_rounded_button_left"
+                            android:hint="Product"
+                            android:paddingLeft="20dp"
+                            android:completionThreshold="1"
+                            android:completionHint="Select A Product"
+                            android:layout_marginBottom="15dp"
+                            android:singleLine="true"/>
+
+                        <EditText
+                            android:id="@+id/quantityEditText"
+                            android:layout_marginLeft="-41dp"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/half_rounded_button_right"
+                            android:hint="Quantity"
+                            android:paddingLeft="10dp"
+                            android:completionThreshold="1"
+                            android:completionHint="Select A Product"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginRight="20dp"
+                            android:singleLine="true"/>
+
+
+
+                    </LinearLayout>
+
+
+                    <Button
+
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:layout_marginLeft="25dp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/roundedbutton"
+                        android:backgroundTint="@color/colorPrimaryLightDark"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:foreground="@drawable/ripple_rounded"
+                        android:fontFamily="sans-serif-medium"
+                        android:id="@+id/addProductButton"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Costs"
+                        android:layout_marginTop="30dp"
+                        android:textSize="21sp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-medium"/>
+
+                    <EditText
+                        android:id="@+id/discountEditText"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_width="190dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/roundedbutton"
+                        android:hint="Discount %"
+                        android:paddingLeft="20dp"
+                        android:inputType="number"
+                        android:completionThreshold="1"
+                        android:completionHint="Select A Customer"
+                        android:layout_marginBottom="15dp"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:id="@+id/shippingEditText"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_width="190dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/roundedbutton"
+                        android:hint="Shipping"
+                        android:paddingLeft="20dp"
+                        android:inputType="number"
+                        android:completionThreshold="1"
+                        android:completionHint="Select A Customer"
+                        android:layout_marginBottom="15dp"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:id="@+id/handlingEditText"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_width="190dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/roundedbutton"
+                        android:hint="Handling + Extras"
+                        android:paddingLeft="20dp"
+                        android:inputType="number"
+                        android:completionThreshold="1"
+                        android:completionHint="Select A Customer"
+                        android:layout_marginBottom="15dp"
+                        android:singleLine="true"/>
+
+                    <Button
+
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Next"
+                        android:layout_marginLeft="25dp"
+                        android:textAllCaps="false"
+                        android:background="@drawable/roundedbutton"
+                        android:backgroundTint="@color/colorPrimaryLightDark"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:foreground="@drawable/ripple_rounded"
+                        android:fontFamily="sans-serif-medium"
+                        android:id="@+id/nextButton"
+                        />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        app:cardCornerRadius="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="100dp"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Products"
+                                android:layout_marginTop="30dp"
+                                android:textSize="21sp"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/colorPrimaryLightDark"
+                                android:fontFamily="sans-serif-medium"/>
+
+                            <TextView
+                                android:id="@+id/cardTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:layout_marginTop="10dp"
+                                android:textSize="15sp"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:fontFamily="sans-serif-medium"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="20dp">
+
+                                <TextView
+                                    android:id="@+id/totalTextView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Total: "
+                                    android:textSize="18sp"
+                                    android:layout_marginLeft="30dp"
+                                    android:textColor="@color/colorAccent"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="sans-serif-medium"/>
+
+
+
+                                <Button
+                                    android:visibility="invisible"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Save"
+                                    android:layout_marginRight="25dp"
+                                    android:textAllCaps="false"
+                                    android:background="@drawable/roundedbutton"
+                                    android:backgroundTint="@color/colorPrimaryLightDark"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:foreground="@drawable/ripple_rounded"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:id="@+id/saveButton"
+                                    android:layout_alignParentRight="true"
+                                    />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </FrameLayout>

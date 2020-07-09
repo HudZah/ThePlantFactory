@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class MainFragment extends Fragment {
     private ArrayList<String> totals = new ArrayList<>();
     private TextView header;
     private Button viewOrdersButton;
+    private HorizontalRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     FloatingActionButton fabLeave;
     int max = 0;
@@ -91,7 +93,15 @@ public class MainFragment extends Fragment {
         });
 
         getLatestOrders();
-        initRecyclerView();
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.startLoadingDialog();
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                initRecyclerView();
+                loadingDialog.dismissDialog();
+            }
+        }, 2500);
     }
 
     private void getLatestOrders(){
@@ -115,7 +125,7 @@ public class MainFragment extends Fragment {
                             String dateString = formatter.format(objects.get(i).getCreatedAt());
                             dates.add(dateString);
                             Log.d(TAG, "done: " + dateString);
-                            totals.add("LKR " + String.valueOf(objects.get(i).getNumber("total")));
+                            totals.add("Total: LKR " + String.valueOf(objects.get(i).getNumber("total")));
                             Log.d(TAG, "initRecyclerView: " + invoiceIDList.get(0));
                         }
                     }
@@ -129,11 +139,11 @@ public class MainFragment extends Fragment {
     }
 
     private void initRecyclerView(){
-        Log.d(TAG, "initRecyclerView: Init");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        HorizontalRecyclerViewAdapter adapter = new HorizontalRecyclerViewAdapter(getContext(), completed, invoiceIDList, cusNames, dates, totals);
+        adapter = new HorizontalRecyclerViewAdapter(getContext(), completed, invoiceIDList, cusNames, dates, totals);
         recyclerView.setAdapter(adapter);
+        Log.d(TAG, "initRecyclerView: Init");
 
     }
 

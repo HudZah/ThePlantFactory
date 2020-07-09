@@ -67,6 +67,7 @@
             android:backgroundTint="@color/colorPrimaryLightDark"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
+            android:foreground="@drawable/ripple_rounded"
             android:fontFamily="sans-serif-medium"
             android:id="@+id/button"
             />
