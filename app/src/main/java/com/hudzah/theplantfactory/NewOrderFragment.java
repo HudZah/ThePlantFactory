@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.util.Log;
@@ -57,6 +59,8 @@ public class NewOrderFragment extends Fragment {
     Button bulkButton;
     Button retailButton;
     ArrayList<String> productsList = new ArrayList<>();
+    ArrayList<String> itemsList = new ArrayList<>();
+    ArrayList<String> quanList = new ArrayList<>();
     ArrayList<String> PRODUCTS_LIST = new ArrayList<>();
     ArrayList<String> tempListKeys = new ArrayList<>();
     ArrayList<String> tempListEntries = new ArrayList<>();
@@ -70,6 +74,7 @@ public class NewOrderFragment extends Fragment {
     ArrayList<String> retailPricesList = new ArrayList<>();
     ArrayList<String> bulkPricesList = new ArrayList<>();
     ArrayList<String> customersList = new ArrayList<>();
+    ArrayList<String> ratesList = new ArrayList<>();
     Button nextButton;
     EditText discountEditText;
     EditText shippingEditText;
@@ -77,7 +82,6 @@ public class NewOrderFragment extends Fragment {
     CardView cardView;
     TextView cardTextView;
     int count = 0;
-    HashMap<String, String> productsMap = new HashMap<String, String>();
     AutoCompleteTextView customerTextView;
     Double grossTotal = 0.0;
     TextView totalTextView;
@@ -87,6 +91,8 @@ public class NewOrderFragment extends Fragment {
     ArrayAdapter<String> customerNamesAdapter;
     Double netTotal;
     int clickBlockerCount;
+    NavController navController;
+    NewOrderFragmentDirections.ActionNewOrderFragmentToInvoiceFragment action;
 
 
     public NewOrderFragment() {
@@ -104,7 +110,7 @@ public class NewOrderFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        navController = Navigation.findNavController(view);
         bulkButton = (Button) view.findViewById(R.id.bulkButton);
         retailButton = (Button) view.findViewById(R.id.retailButton);
         addProductButton = (Button) view.findViewById(R.id.addProductButton);
@@ -263,7 +269,7 @@ public class NewOrderFragment extends Fragment {
     private void addProduct(){
         addProductButton.setEnabled(false);
         String productName = productEditText.getText().toString();
-        String quantity = quantityEditText.getText().toString();
+        String quantity = quantityEditText.getText().toString().trim();
         if(productName.equals("") || quantity.equals("") || !productsList.contains(productName)){
             Toast.makeText(getContext(), "Invalid product", Toast.LENGTH_SHORT).show();
             addProductButton.setEnabled(true);
@@ -279,17 +285,17 @@ public class NewOrderFragment extends Fragment {
         quantityEditText.getText().clear();
         productsList.remove(productName);
         productsAdapter.remove(productName);
-        productsMap.put(quantity, productName);
+
+        quanList.add(quantity);
+        itemsList.add(productName);
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                // Intent to login
                 updateCardView();
 
             }
-        }, 500);
+        }, 300);
         addProductButton.setEnabled(true);
-        Log.d(TAG, "addProduct: map" + productsMap);
     }
 
     private void next(){
@@ -307,7 +313,7 @@ public class NewOrderFragment extends Fragment {
         text += "Handling " + "LKR " + handlingEditText.getText().toString() + "\n\n";
 
         netTotal = tempValue + Double.parseDouble(handlingEditText.getText().toString()) + Double.parseDouble(shippingEditText.getText().toString());
-        cardTextView.setText(text);
+        cardTextView.append(text);
         totalTextView.setText("Total: LKR " + Math.round((netTotal * 100)/100));
         saveButton.setVisibility(View.VISIBLE);
 
@@ -316,12 +322,16 @@ public class NewOrderFragment extends Fragment {
 
     private void updateCardView(){
         String text = "";
-        for (HashMap.Entry<String, String> item : productsMap.entrySet()) {
-            String quantity = item.getKey();
-            String name = item.getValue();
+        grossTotal = 0.0;
+        ratesList.clear();
+        cardTextView.setText("");
+        for (int i = 0; i < itemsList.size(); i++) {
+            String quantity = quanList.get(i);
+            String name = itemsList.get(i);
             if(type.equals("R")){
                 grossTotal = grossTotal + Double.parseDouble(quantity) * Double.parseDouble(retailPricesList.get(PRODUCTS_LIST.indexOf(name)));
                 text = name.trim() + " " + quantity + "kg" + "\nTotal = " + Integer.parseInt(quantity) * Integer.parseInt(retailPricesList.get(PRODUCTS_LIST.indexOf(name))) + "\n\n";
+                ratesList.add(retailPricesList.get(PRODUCTS_LIST.indexOf(name)));
                 cardTextView.append(text);
 
             }
@@ -329,6 +339,7 @@ public class NewOrderFragment extends Fragment {
                 grossTotal = grossTotal + Double.parseDouble(quantity) * Double.parseDouble(bulkPricesList.get(PRODUCTS_LIST.indexOf(name)));
                 Log.d(TAG, "updateCardView: Position is" + productsList.indexOf(name));
                 text = name.trim() + " " + quantity + "kg" + "\n Total = " + Integer.parseInt(quantity) * Integer.parseInt(bulkPricesList.get(PRODUCTS_LIST.indexOf(name))) + "\n\n";
+                ratesList.add(bulkPricesList.get(PRODUCTS_LIST.indexOf(name)));
                 cardTextView.append(text);
             }
 
@@ -342,7 +353,7 @@ public class NewOrderFragment extends Fragment {
             return false;
         }
         else{
-            if(productsMap.size() <= 0){
+            if(itemsList.size() <= 0){
                 Toast.makeText(getContext(), "Please add a product first", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -380,6 +391,7 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void done(int count, ParseException e) {
                 if(e == null){
+                    loadingDialog.dismissDialog();
                     invoiceID += count;
                     Log.d(TAG, "done: count" + count);
                 }
@@ -390,31 +402,36 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void run() {
                 header.setText("InvoiceID: " + invoiceID);
-                loadingDialog.dismissDialog();
             }
         }, 1000);
 
     }
 
     private void saveToParse(){
-        mapToArrays();
-        Log.d(TAG, "saveToParse: Type is " + productsMap.keySet().toArray());
+        hideKeyboard(getView());
+        final LoadingDialog loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.startLoadingDialog();
         ParseObject object = new ParseObject("Orders");
         object.put("invoiceID", invoiceID);
         object.put("type", type);
         object.put("customer", customerTextView.getText().toString());
         object.put("discount", Integer.parseInt(discountEditText.getText().toString()));
-        object.put("products", tempListEntries);
-        object.put("quantity", tempListKeys);
+        object.put("products", itemsList);
+        object.put("quantity", quanList);
         object.put("extraFees", Integer.parseInt(handlingEditText.getText().toString()));
         object.put("shippingFees", Integer.parseInt(shippingEditText.getText().toString()));
         object.put("total", netTotal);
+        object.put("rates", ratesList);
         object.put("placedBy", ParseUser.getCurrentUser().getUsername());
         object.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if(e == null){
                     Toast.makeText(getContext(), "Order Saved!", Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismissDialog();
+                    action = NewOrderFragmentDirections.actionNewOrderFragmentToInvoiceFragment(invoiceID);
+                    action.setInvoiceID(invoiceID);
+                    navController.navigate(action);
                 }
                 else{
                     Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -422,15 +439,6 @@ public class NewOrderFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void mapToArrays(){
-        for (HashMap.Entry<String, String> item : productsMap.entrySet()) {
-            String quantity = item.getKey();
-            String name = item.getValue();
-            tempListKeys.add(quantity);
-            tempListEntries.add(name);
-        }
     }
 
 

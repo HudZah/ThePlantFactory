@@ -14,10 +14,23 @@
         android:id="@+id/newOrderFragment"
         android:name="com.hudzah.theplantfactory.NewOrderFragment"
         android:label="fragment_new_order"
-        tools:layout="@layout/fragment_new_order" />
+        tools:layout="@layout/fragment_new_order" >
+        <action
+            android:id="@+id/action_newOrderFragment_to_invoiceFragment"
+            app:destination="@id/invoiceFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ordersListFragment"
         android:name="com.hudzah.theplantfactory.OrdersFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
+    <fragment
+        android:id="@+id/invoiceFragment"
+        android:name="com.hudzah.theplantfactory.InvoiceFragment"
+        android:label="fragment_invoice"
+        tools:layout="@layout/fragment_invoice" >
+        <argument
+            android:name="invoiceID"
+            app:argType="string" />
+    </fragment>
 </navigation>
